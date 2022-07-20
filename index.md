@@ -1,37 +1,40 @@
-## Welcome to GitHub Pages
+R中设计矩阵
+在R中,模型Matrix是一个有用的工具，可以用来查看在构建回归模型时发挥作用的设计矩阵。
+1.构建一个简单的数据框
+首先，构建一个简单的数据框，以时间为因子，时间为连续的数字变量。打印数据框时，这两个变量看起来很相似。但是，如果你summary一下数据，你会发现它们是不同的。
+d <- data.frame(time = factor(1:4), Time = 1:4)
+d
+## time Time
+## 1 1 1
+## 2 2 2
+## 3 3 3
+## 4 4 4
+summary(d)
+## time Time
+## 1:1 Min. :1.00
+## 2:1 1st Qu.:1.75
+## 3:1 Median :2.50
+## 4:1 Mean :2.50
+##     3rd Qu.:3.25
+##     Max. :4.00
+R中的默认类型是 treatment contrasts，其中参考水平(控制)是因素变量的第一级，这是提供的值中数字或字母最低的一级。你可以将参考水平设置为你想要的因素的任何水平，注意，与其他列(time2、time3、time4)相关联的β是截取调整项。
+model.matrix(~time, data = d)
+## (Intercept) time2 time3 time4
+## 1  1           0    0     0
+## 2  1           1    0     0
+## 3  1           0    1     0
+## 4  1           0    0     1
+## attr(,"assign")
+## [1] 0 1 1 1
+## attr(,"contrasts")
+## attr(,"contrasts")$time
+## [1] "contr.treatment"
 
-You can use the [editor on GitHub](https://github.com/Conghan-01/Conghan.github.io/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
-```markdown
-Syntax highlighted code block
 
-# Header 1
-## Header 2
-### Header 3
 
-- Bulleted
-- List
 
-1. Numbered
-2. List
 
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Conghan-01/Conghan.github.io/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
